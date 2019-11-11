@@ -9,11 +9,9 @@ from wagtail.documents import urls as wagtaildocs_urls
 from search import views as search_views
 
 from django.urls import path
-from api import views
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
-    path('api/hello/', views.HelloView.as_view(), name='hello'),
     #path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/api-token-auth', obtain_auth_token, name='api_token_auth'),
 
@@ -24,7 +22,7 @@ urlpatterns = [
 
     url(r'^search/$', search_views.search, name='search'),
 
-    path('user/', include('projects.urls')),
+    path('projects/', include('projects.urls')),
 
     url(r'^accounts/', include('allauth.urls')),
     #url(r'', include('allauth.urls')),
