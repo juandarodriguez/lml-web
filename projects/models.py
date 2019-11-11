@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django_mysql.models import JSONField
 
 class Project(models.Model):
+    uuid = models.CharField(max_length=40, unique=True, default=None)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=255)
     json_data = JSONField()
