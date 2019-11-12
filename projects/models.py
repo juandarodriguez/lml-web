@@ -20,7 +20,8 @@ class Project(models.Model):
 class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    birth_date = models.DateField(null=True, blank=True)
+    month = models.IntegerField(null=False, default=1)
+    year = models.IntegerField(null=False, default=2019)
     gender = models.CharField(max_length=10, choices=GENDERS)
 
     @receiver(post_save, sender=User)
