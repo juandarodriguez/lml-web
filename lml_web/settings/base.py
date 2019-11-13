@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'projects',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
 
     'django.contrib.sites',
     'allauth',
@@ -63,6 +64,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -209,3 +213,5 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_FORMS = {'signup': 'projects.forms.MyCustomSignupForm'}
 
 SITE_ID = 2
+
+CORS_ORIGIN_ALLOW_ALL = True
