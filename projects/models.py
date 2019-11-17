@@ -8,7 +8,7 @@ from .choices import GENDERS
 class Project(models.Model):
     uuid = models.CharField(max_length=40, unique=True, default=None)
     name = models.CharField(max_length=30)
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, null=True, blank=True)
     json_data = JSONField()
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)

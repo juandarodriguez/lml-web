@@ -6,6 +6,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import redirect
+
+from django.contrib.auth.models import User
+
 
 from django.shortcuts import render
 
@@ -25,8 +33,18 @@ class Hello2View(APIView):
 class UserHome(TemplateView):
     template_name = 'projects/user_home.html'
 
+    def get(self, request, *args, **kwargs):
+        try:
+            token_key = request.GET.get("token")
+            token = Token.objects.get(key=token_key)
+            print(token.user)
+        except ObjectDoesNotExist:
+            return redirect('/')
+        login(request, token.user, backend='allauth.account.auth_backends.AuthenticationBackend')
+        return redirect('project')
 
-class ProjectView(TemplateView):
+
+class ProjectView(LoginRequiredMixin, TemplateView):
     template_name = 'projects/projects.html'
 
     def get(self, request, *args, **kwargs):
