@@ -27,6 +27,15 @@ headers
 
 `Authoritation: Token 1c840aa735f78678491c6a77583d8539bb00fecd`
 
+### Obtener todos los proyectos de un usuario
+
+`GET /projects/api/project`
+
+headers
+
+`Authoritation: Token 1c840aa735f78678491c6a77583d8539bb00fecd`
+
+
 ### Enviar un nuevo proyecto
 
 `POST /projects/api/project`

@@ -11,6 +11,8 @@ ALLOWED_HOSTS = ['*']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+LEARNING_ML_URL = 'http://localhost:4200'
+
 
 try:
     from .local import *

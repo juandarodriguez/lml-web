@@ -1,5 +1,6 @@
 import uuid
 
+from django.conf import settings
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from rest_framework.views import APIView
@@ -12,13 +13,14 @@ from django.contrib.auth import login
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect
 
+
 from django.contrib.auth.models import User
 
 
 from django.shortcuts import render
 
 from .models import Project
-from .serializers import ProjectSerializer
+from .serializers import ProjectSerializer, ProjectMetaDataSerializer
 from django.http import Http404
 
 
@@ -30,14 +32,12 @@ class Hello2View(APIView):
         return Response(content)
 
 
-class UserHome(TemplateView):
-    template_name = 'projects/user_home.html'
+class RedirectToProjectView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         try:
             token_key = request.GET.get("token")
             token = Token.objects.get(key=token_key)
-            print(token.user)
         except ObjectDoesNotExist:
             return redirect('/')
         login(request, token.user, backend='allauth.account.auth_backends.AuthenticationBackend')
@@ -46,14 +46,24 @@ class UserHome(TemplateView):
 
 class ProjectView(LoginRequiredMixin, TemplateView):
     template_name = 'projects/projects.html'
+    learningml_url = settings.LEARNING_ML_URL
 
     def get(self, request, *args, **kwargs):
         projects = Project.objects.filter(user=request.user)
-        return render(request, self.template_name, {'projects': projects})
+        return render(request, self.template_name, {
+            'projects': projects,
+            'learningml_url': self.learningml_url
+        })
 
 
 class ApiProjectListView(APIView):
     permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        projects = Project.objects.filter(user=request.user)
+        serializer = ProjectMetaDataSerializer(projects, many=True)
+        return Response(serializer.data)
+
 
     def post(self, request):
         data = request.data

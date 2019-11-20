@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'material.theme.pink',
+    'material',
 
     'django.contrib.sites',
     'allauth',

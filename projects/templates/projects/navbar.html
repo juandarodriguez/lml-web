@@ -1,0 +1,15 @@
+<div class="row">
+<nav>
+    <div class="nav-wrapper deep-purple">
+      <a href="#" class="brand-logo">Logo</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        {% if user.is_authenticated %}
+                <li>{{ user.get_username }}</li>
+          {%else%}
+          <li>Iniciar sesión</li>
+          {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+    </div>
